@@ -1,6 +1,5 @@
 <?php
 
-
 namespace NicoVerbruggen\ImageGenerator;
 
 use NicoVerbruggen\ImageGenerator\Converters\HexConverter;
@@ -50,7 +49,7 @@ class ImageGenerator
      *
      * @return bool
      */
-    public function generate($text = "", $path = null, $size = null, $bgHex = null, $fgHex = null): bool
+    public function generate($text = "", $path = null, $size = null, $bgHex = null, $fgHex = null)
     {
         // The target size is either the one set in the class or the override
         $targetSize = empty($size) ? $this->targetSize : $size;
@@ -111,8 +110,8 @@ class ImageGenerator
                 $imageResource,
                 $size,
                 0,
-                $x,
-                $y,
+                (int) $x,
+                (int) $y,
                 $allocatedFgColor,
                 $font,
                 $text
@@ -143,9 +142,14 @@ class ImageGenerator
 
         // Render image
         if ($path == null) {
-            header('Content-type: image/png');
-            echo imagepng($imageResource, null);
-            exit;
+            // header('Content-type: image/png');
+            // echo imagepng($imageResource, null);
+            // exit;
+            ob_start();
+            imagepng($imageResource, null);
+            $imagedata = ob_get_contents();
+            ob_end_clean();
+            return 'data:image/png;base64,' . base64_encode($imagedata);
         } else {
             imagepng($imageResource, $path);
             return true;

@@ -1,5 +1,5 @@
 {
-    "name": "nicoverbruggen/image-generator",
+    "name": "goldfinch/image-generator",
     "description": "Generate placeholder images with a specific size, color and text (optional).",
     "type": "project",
     "license": "MIT",
